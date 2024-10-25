@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Result Found</title>
+</head>
+<style>
+.noresult{
+    margin-top: 90px;
+}
+</style>
+<body>
+    <div class="container noresult">
+        <div class="row">
+            <div class="offset-md-4 col-md-4 shadow text-center bg-light p-2" style="height: 200px;">
+                <span class="check-mark">&#10003;</span>
+               <h4>No Result Found For  "{{ searched_term }}" </h4> 
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+{% endblock content %}

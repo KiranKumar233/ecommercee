@@ -1,0 +1,428 @@
+{% extends 'main.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-yr8OrQgtfgymFNHyG7/WVt8HR2tlHrKDheSmS11FPxf3U1oUVjGggg+nY/hzv6PQtPLaV5t5lFvgkmN4D+8zCA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    /* Custom CSS for star rating */
+    .star {
+        color: white;
+        /* Default color of the star */
+        cursor: pointer;
+        /* Show pointer cursor on hover */
+    }
+
+    .rated {
+        color: gold;
+        /* Color of the star when rated */
+    }
+
+    .badge {
+        font-size: large;
+        color: whitesmoke;
+    }
+
+    .like-btn i {
+        font-size: 50px;
+        /* Icon size */
+    }
+
+    .like-btn {
+        background-color: rgb(239, 239, 239);
+        /*background for dislike button */
+        color: black;
+        /* White text color */
+        border: none;
+        /* No border */
+        cursor: pointer;
+        /* Show pointer cursor */
+        padding: 0;
+        /* Remove padding */
+        margin-right: 10px;
+        /* Add margin-right */
+    }
+
+    .like-btn:hover {
+        color: #0755ff;
+        /* Darker green background on hover */
+    }
+
+    .dislike-btn i {
+        font-size: 50px;
+        /* Icon size */
+    }
+
+    .dislike-btn {
+        background-color: rgb(239, 239, 239);
+        /*background for dislike button */
+        color: black;
+        /* White text color */
+        border: none;
+        /* No border */
+        cursor: pointer;
+        /* Show pointer cursor */
+        padding: 0;
+        /* Remove padding */
+        margin-right: 10px;
+        /* Add margin-right */
+    }
+
+    .dislike-btn:hover {
+        color: #d32f2f;
+        /* Darker red background on hover */
+    }
+
+    /* Additional CSS for like button when clicked */
+    .liked {
+        color: #0755ff !important;
+        /* Change color when liked */
+        pointer-events: none;
+        /* Disable pointer events */
+    }
+
+    .disliked {
+        color: #d32f2f !important;
+        /* Change color when liked */
+        pointer-events: none;
+        /* Disable pointer events */
+    }
+
+    .addToWishlist {
+        border-radius: 50px;
+        width: 300px;
+    }
+
+    .addToCartBtn {
+        border-radius: 50px;
+        width: 300px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-shadow">
+                    <div class="card-body cartdata">
+                        <div class="row product_data">
+                            <div class="col-md-4">
+
+                                {% if products.tag %}
+                                <label class='product_viewtag'>{{products.tag}}</label>
+                                {% endif %}
+                                <img src="{{products.product_image.url}}" class='w-100' alt="image">
+                            </div>
+                            <div class="col-md-8">
+                                <h2 class='mb-0 text-primary'>
+                                    {{ products.name }}
+                                    <label style='font-size:16px;'
+                                        class='float-end badge bg-danger trending-tag'></label>
+                                </h2>
+                                <hr>
+                                <h4 class="text-dark">{{ products.small_description }} </h4>
+                                <label class="fw-bold">Price :<br>Rs.
+                                        {{products.selling_prices|stringformat:"d"}}</label>
+                                {% if products.quantity > 0 %}
+                                <label class="btn btn-danger"
+                                    style="border-radius: 20px; color: white; font-size:small;">
+                                    - {{products.offer}}</label>
+                                <label class='text-success mr-4' style="font-size:small;"> In stock </label><br>
+                                {% else %}
+                                <label class='text-danger' style="font-size:small;">Out of stock</label>
+                                {% endif %}
+                                <label>M.R.P:  Rs. <s>{{products.original_price|stringformat:"d"}}
+                                </s>(Inclusive of all taxes)</label>
+                                <pre>
+<sapn><b style="font-size:medium;">Product Detail:</b></span>
+<label>{{ products.description }}</label>
+</pre>
+
+                                <hr>
+                                <div class="row mt-2">
+                                    <div class="col-md-3 ml-1">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{products.id}}" class="prod_id">
+                                        <div class="input-group text-center mb-3" style='width:130px;'>
+                                            <button class='input-group-text decrement-btn'>-</button>
+                                            <input type="text" name="quantity"
+                                                class='form-control qty-input text-center' value='1'>
+                                            <button class='input-group-text increment-btn'>+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 ml-1">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="offset-md-4 col-md-6">
+                                <form action="{% url 'placeorder' %}" method="POST">
+                                    {% csrf_token %}
+                                    <!-- Include other form fields here if needed -->
+                                    <button type="button" class='btn btn-primary addToWishlist mb-2 float-start'><i class='fa fa-heart'></i>Add to Wishlist </button>
+                                    {% if products.quantity > 0 %}
+                                    <br><button type="button" class='btn btn-warning float-start addToCartBtn mb-2'><i
+                                            class='fa fa-shopping-cart mr-2'></i>Add to cart </button>
+                                    {% endif %}
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
+                            <h3>About this product</h3>
+                            <pre>
+<label class="fw-bold">{{ products.meta_description}}</label>
+                            </pre>
+                            <div class="like-dislike">
+                                <button id="likeBtn" class="like-btn" onclick="likeProduct()">
+                                    <i class="fa fa-thumbs-up" style="font-size: 50px;"></i>
+                                    <!-- Font Awesome thumbs-up icon -->
+                                </button>
+                                <span id="likeCount">0</span>
+                                <button id="dislikeBtn" class="dislike-btn" onclick="dislikeProduct()">
+                                    <i class="fa fa-thumbs-down" style="font-size: 50px;"></i>
+                                    <!-- Font Awesome thumbs-down icon -->
+                                </button>
+                                <span id="dislikeCount">0</span>
+                            </div>
+                        </div>
+                        <!-- Customer Reviews Section -->
+                        <div class="mt-4" style="background-color:rgb(173, 173, 173); padding: 20px;">
+                            <h3>Customer Reviews</h3>
+                            <!-- Add a form for customers to leave their reviews -->
+                            <form id="reviewForm">
+                                <div class="mb-3">
+                                    <label for="reviewerName">Your Name:</label>
+                                    <input type="text" class="form-control" id="reviewerName"
+                                        placeholder="Enter your name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="rating">Rating:</label>
+                                    <div class="rating">
+                                        <span class="star" onclick="rate(1)"><i class="fa fa-star"></i></span>
+                                        <span class="star" onclick="rate(2)"><i class="fa fa-star"></i></span>
+                                        <span class="star" onclick="rate(3)"><i class="fa fa-star"></i></span>
+                                        <span class="star" onclick="rate(4)"><i class="fa fa-star"></i></span>
+                                        <span class="star" onclick="rate(5)"><i class="fa fa-star"></i></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="review">Leave your review:</label>
+                                    <textarea class="form-control" id="review" rows="3"></textarea>
+                                </div>
+                                <button type="button" onclick="submitReview()" class="btn btn-primary mb-2">Submit
+                                    Review</button>
+                            </form>
+                            <!-- Display existing reviews -->
+                            <div id="reviews">
+                                <!-- Reviews will be displayed here dynamically using JavaScript -->
+                            </div>
+                        </div>
+                        <!-- End of Customer Reviews Section -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // JavaScript function for like and dislike buttons
+        let likeCount = localStorage.getItem('likeCount') ? parseInt(localStorage.getItem('likeCount')) : 0;
+        let dislikeCount = 0;
+
+        function likeProduct() {
+            likeCount++;
+            localStorage.setItem('likeCount', likeCount);
+            document.getElementById('likeCount').textContent = likeCount;
+            document.getElementById('likeBtn').classList.add('liked');
+            document.getElementById('likeBtn').disabled = true;
+            document.getElementById('dislikeBtn').disabled = false;
+        }
+
+        function dislikeProduct() {
+            dislikeCount++;
+            likeCount--;
+            localStorage.setItem('likeCount', likeCount);
+            document.getElementById('likeCount').textContent = likeCount;
+            document.getElementById('dislikeCount').textContent = dislikeCount;
+            document.getElementById('likeBtn').classList.remove('liked');
+            document.getElementById('dislikeBtn').classList.add('disliked');
+            document.getElementById('dislikeBtn').disabled = true;
+            document.getElementById('likeBtn').disabled = false;
+        }
+
+        // Function to add a review to the reviews container
+        function addReviewToContainer(review) {
+            // Create review element
+            let reviewElement = document.createElement('div');
+            reviewElement.classList.add('review');
+
+            // Add reviewer's name
+            let nameElement = document.createElement('p');
+            nameElement.textContent = 'Reviewer: ' + review.reviewerName;
+            reviewElement.appendChild(nameElement);
+
+            // Add rating stars
+            let ratingElement = document.createElement('p');
+            ratingElement.textContent = 'Rating: ' + review.rating + ' stars';
+            reviewElement.appendChild(ratingElement);
+
+            // Add review text
+            let textElement = document.createElement('p');
+            textElement.textContent = review.reviewText;
+            reviewElement.appendChild(textElement);
+
+            // Add reply input field
+            let replyInput = document.createElement('input');
+            replyInput.classList.add('reply-input');
+            replyInput.setAttribute('placeholder', 'Reply to this review');
+            replyInput.style.border = '1px solid #ccc'; // Add border
+            replyInput.style.padding = '8px'; // Add padding
+            replyInput.style.marginRight = '8px'; // Add margin-right
+            reviewElement.appendChild(replyInput);
+
+            // Add reply button
+            let replyButton = document.createElement('button');
+            replyButton.textContent = 'Reply';
+            replyButton.style.backgroundColor = '#4CAF50'; // Green background
+            replyButton.style.color = 'white'; // White text color
+            replyButton.style.padding = '8px 20px'; // Padding
+            replyButton.style.border = 'none'; // No border
+            replyButton.style.cursor = 'pointer'; // Cursor pointer
+            replyButton.style.marginRight = '8px'; // Add margin-right
+            replyButton.style.borderRadius = '10px'; // Add margin-right
+            replyButton.addEventListener('click', function () {
+                let replyText = replyInput.value;
+                if (replyText.trim() !== '') {
+                    let replyElement = document.createElement('p');
+                    replyElement.textContent = 'Reply: ' + replyText;
+                    reviewElement.appendChild(replyElement);
+                    review.replies.push(replyText); // Store reply in review object
+                    updateLocalStorage();
+                    replyInput.value = '';
+                }
+            });
+            reviewElement.appendChild(replyButton);
+
+            // Add remove button
+            let removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.classList.add('remove-btn');
+            removeButton.style.backgroundColor = '#f44336'; // Red background
+            removeButton.style.color = 'white'; // White text color
+            removeButton.style.padding = '8px 20px'; // Padding
+            removeButton.style.border = 'none'; // No border
+            removeButton.style.cursor = 'pointer'; // Cursor pointer
+            removeButton.style.borderRadius = '10px'; // Add margin-right
+            removeButton.addEventListener('click', function () {
+                reviewElement.remove();
+                updateLocalStorage();
+            });
+            reviewElement.appendChild(removeButton);
+
+            // Append review element to reviews container
+            document.getElementById('reviews').appendChild(reviewElement);
+        }
+
+        // Function to handle form submission and store reviews in local storage
+        function submitReview() {
+            // Get reviewer's name
+            let reviewerName = document.getElementById('reviewerName').value;
+
+            // Get review text
+            let reviewText = document.getElementById('review').value;
+
+            // Get rating
+            let rating = 0;
+            let stars = document.querySelectorAll('.star');
+            stars.forEach(function (star) {
+                if (star.classList.contains('rated')) {
+                    rating++;
+                }
+            });
+
+            // Create review object
+            let review = {
+                reviewerName: reviewerName,
+                reviewText: reviewText,
+                rating: rating,
+                replies: [] // Initialize replies array
+            };
+
+            // Add review to container
+            addReviewToContainer(review);
+
+            // Clear form fields
+            document.getElementById('reviewerName').value = '';
+            document.getElementById('review').value = '';
+            stars.forEach(function (star) {
+                star.classList.remove('rated');
+            });
+
+            // Update local storage
+            updateLocalStorage();
+        }
+
+        // Function to update local storage with reviews data
+        function updateLocalStorage() {
+            let reviews = [];
+            let reviewElements = document.querySelectorAll('.review');
+            reviewElements.forEach(function (element) {
+                let reviewerName = element.querySelector('p').textContent.replace('Reviewer: ', '');
+                let rating = element.querySelectorAll('p')[1].textContent.replace('Rating: ', '').replace(' stars', '');
+                let reviewText = element.querySelectorAll('p')[2].textContent;
+                let replies = [];
+                let replyElements = element.querySelectorAll('p');
+                for (let i = 3; i < replyElements.length; i++) {
+                    replies.push(replyElements[i].textContent.replace('Reply: ', ''));
+                }
+                reviews.push({
+                    reviewerName: reviewerName,
+                    reviewText: reviewText,
+                    rating: rating,
+                    replies: replies
+                });
+            });
+            localStorage.setItem('reviews', JSON.stringify(reviews));
+        }
+
+        // Function to retrieve reviews from local storage and display them
+        function retrieveReviewsFromLocalStorage() {
+            let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+            reviews.forEach(function (review) {
+                addReviewToContainer(review);
+            });
+        }
+
+        // Function to handle rating stars
+        function rate(rating) {
+            let stars = document.querySelectorAll('.star');
+            stars.forEach(function (star, index) {
+                if (index < rating) {
+                    star.classList.add('rated');
+                } else {
+                    star.classList.remove('rated');
+                }
+            });
+        }
+
+        // Call function to retrieve reviews from local storage when the page loads
+        window.onload = function () {
+            retrieveReviewsFromLocalStorage();
+            document.getElementById('likeCount').textContent = likeCount;
+        };
+    </script>
+</body>
+
+</html>
+{% endblock content %}

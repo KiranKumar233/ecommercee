@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+  <!DOCTYPE html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ item }} Detail</title>
+</head>
+<body>
+    <h2>{{ item }}</h2>
+    <p>{{ item.description }}</p>
+    <h3>Customer Reviews</h3>
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <strong>{{ review.customer_name }}</strong>
+                <p>Rating: {{ review.rating }}</p>
+                <p>{{ review.review_text }}</p>
+            </li>
+        {% empty %}
+            <li>No reviews yet.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_review' item.id %}">Add a Review</a>
+</body>
+</html>

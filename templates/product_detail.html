@@ -1,0 +1,17 @@
+<!-- Display existing reviews -->
+<div id="reviews">
+    {% for review in reviews %}
+        <div class="mb-3">
+            <h5>{{ review.reviewer_name }}</h5>
+            <div class="rating">
+                {% for _ in range(review.rating) %}
+                    <span class="star rated"><i class="fa fa-star"></i></span>
+                {% endfor %}
+                {% for _ in range(5 - review.rating) %}
+                    <span class="star"><i class="fa fa-star"></i></span>
+                {% endfor %}
+            </div>
+            <p>{{ review.review_text }}</p>
+        </div>
+    {% endfor %}
+</div>

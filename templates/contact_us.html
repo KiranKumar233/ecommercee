@@ -1,0 +1,38 @@
+{%extends 'main.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  {% include 'cdnlines.html' %}
+  <title>Contact Us</title>
+  <style>
+    body,html {height: 100%;margin: 0; display: flex; justify-content: center; align-items: center;}
+    form {width: 400px;height: 530px; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); background-color: #f0f0f0;}
+    h1 {text-align: center;}
+    button { display: block; margin: 0 auto; text-align: center}
+  </style>
+</head>
+
+<body>
+  {% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="offset-md-2 col-md-6">
+      </div>
+    </div>
+    <div class="row">
+      <div class="offset-md-2 col-md-4">
+        <form method="post">
+          <h1>Contact Us</h1>
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-outline-success text-align: center">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {%endblock%}
+</body>
+
+</html>

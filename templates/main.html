@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  {% include 'cdnlines.html' %}
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'owl.theme.default.min.css' %}">
+  <title>ATS E-SHOPPING WEBSITE </title>
+</head>
+<style>
+  body {
+    
+    margin-top: 70px;
+  }
+
+  .alertify-notifier {
+    position: fixed;
+    left: 60%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Style for the popup messages */
+  .popupMessage .ajs-message {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+
+  /* Custom style for the success message */
+  .popupMessage .ajs-success {
+    background-color: #8d0454 !important;
+    color: white !important;
+  }
+
+  /* Custom style for the error message */
+  .popupMessage .ajs-error {
+    background-color: #f44336;
+    /* Red color */
+    color: white;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  * {
+    font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  }
+
+  .WhatsApp {
+    width: 60px;
+    margin-top: 20px;
+  }
+
+  footer {
+    background-color: rgba(0, 0, 0, 0.797);
+    color: white;
+    font-size: 16px;
+    position: relative;
+    
+  }
+
+  footer a {
+    color: aliceblue;
+  }
+
+
+</style>
+
+<body>
+  <header>{% include 'navbar.html' %}</header>
+  <main class="wrapper">
+    {% block content %}
+
+    {% endblock %}
+  </main>
+  <footer class="container-fluid mt-2">
+    <div class="container pt-5 pb-5">
+      <div class="row">
+        <div class="offset-md-2 col-md-3">
+          <!-- customer_service.html -->
+          <h5>Services</h5>
+          <a href="{% url 'contactus'%}">Contact Us</a><br>
+          <a href="{% url 'faq'%}">FAQ</a><br>
+          <a href="{% url 'feedback'%}">Feedback & Suggestions</a><br>
+        </div>
+        <div class="col-md-3">
+          <h5>Connect with Us</h5>
+          <a href="https://www.facebook.com"> Facebook</a><br>
+          <a href="https://twitter.com/?lang=en-in"> Twitter</a><br>
+          <a href="https://www.instagram.com/?hl=en"> Instagram</a><br>
+          <a href="https://web.telegram.org/"> Telegram</a><br>
+        </div>
+        <div class="col-md-3">
+          <h5>Get to Know Us</h5>
+          <a href="{% url 'aboutus'%}" onclick="scrollToSection('aboutUs')"> About Us</a><br>
+          <a href="{% url 'aboutus'%}#ourStory" onclick="scrollToSection('ourStory')">Our Story</a><br>
+          <a href="{% url 'aboutus'%}#missionValues" onclick="scrollToSection('missionValues')">Mission & Values</a><br>
+          <a href="{% url 'aboutus'%}#ourTeam" onclick="scrollToSection('careers')">Careers</a><br>
+        </div>
+      </div>
+    </div>
+    <p class="text-center">&copy; 2024 Your Online Store. All rights reserved.</p>
+  </footer>
+  <div class="container-fluid whatsapp-chat">
+    <a href="https://wa.me/+919010607010?text=I'm%20inquiring%20about%20the%20apartment%20listing" target="_blank"
+      class="whatsapp-chat">
+      <img src="{% static '/image/whatsapp.png' %}" alt="WhatsApp Logo" class="WhatsApp">
+    </a>
+  </div>
+  <!-- jquary -->
+  <script src="{% static '/js/jquery-3.7.1.min.js' %}"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <div class="popupMessage">
+      {% for msg in messages %}
+    <script>
+      alertify.set('notifier', 'position', 'center');
+      alertify.success('{{ msg }}');
+    </script>
+  {% endfor %}
+  </div>
+
+  <script>
+    var availableTags = [];
+    $.ajax({
+      type: "GET",
+      url: "/product-list",
+
+      success: function (response) {
+        startAutocomplete(response);
+      }
+    });
+
+    function startAutocomplete(availableTags) {
+
+      $("#searchproducts").autocomplete({
+        source: availableTags
+      });
+
+    }
+
+    function scrollToSection(sectionId) {
+      var section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  </script>
+  <script src="{% static 'js\custom.js' %}"></script>
+  <!-- start to tawk.to chat -->
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/6614479ca0c6737bd129aed8/1hqvjffot';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
+    })();
+  </script>
+  <!--End of Tawk.to Script-->
+
+  <!-- alertify JS -->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+  <script src="{% static '/js/owl.carousel.min.js' %}"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <script src="" charset="utf-8">
+    var availableTags = []
+    $.ajax({
+      type: "GET",
+      url: "/product-list",
+
+      success: function (response) {
+        startAutocomplete(response);
+      }
+    });
+    function startAutocomplete(availableTags) {
+
+      $("#searchproducts").autocomplete({
+        source: availableTags
+      });
+
+    }
+  </script>
+
+  {% block scripts %}
+
+  {% endblock scripts %}
+  {% comment %} Razorpay checkout {% endcomment %}
+  <script src="{% static '/js/checkout.js' %}"></script>
+</body>
+
+</html>

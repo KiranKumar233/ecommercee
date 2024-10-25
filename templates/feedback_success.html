@@ -1,0 +1,72 @@
+{% extends 'main.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You for Your Feedback!</title>
+
+</head>
+<style>
+   
+
+    .feedback {
+        max-width: 600px;
+        background-color: rgb(25, 17, 99);
+        border-radius: 8px;
+        box-shadow: 7px 5px 5px rgb(112, 112, 111);
+        text-align: center;
+        color: rgb(232, 188, 130);
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        text-decoration: underline;
+    }
+
+    .thank-you-symbol {
+        position: relative;
+        display: inline-block;
+    }
+
+    .circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 2px solid rgb(232, 188, 130);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .check-mark {
+        font-size: 100px;
+        position: relative;
+        z-index: 1;
+    }
+
+    p {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<body>
+    <div class="container feedback">
+        <div class="row">
+        <div class="col-md-12">
+            <h1>Thank You for Your Feedback!</h1>
+            <div class="thank-you-symbol">
+                <div class="circle"></div>
+                <span class="check-mark">&#10003;</span>
+            </div>
+            <p>We appreciate you taking the time to share your thoughts with us. Your feedback helps us improve.</p>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock content %}

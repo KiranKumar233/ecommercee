@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+{% include 'cdnlines.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+    .email-popup {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        background-color: whitesmoke;
+        padding: 10px;
+        border-radius: 20px 0px 20px 0px;
+        border: 3px solid grey;
+
+    }
+</style>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="offset-md-4 col-md-4 shadow email-popup">
+                <h5>Verify Email and OTP </h5>
+                <form method="POST">
+                    {% csrf_token %}
+                    <label for="otp">Enter OTP:</label><br>
+                    <input type="text" id="otp" name="otp" required><br><br>
+                    <button type="submit" class="btn btn-primary mb-5">Verify OTP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

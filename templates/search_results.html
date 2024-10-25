@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container">
+  <h4>Search Results for "{{ searched_term }}"</h4>
+  <hr>
+  <div class="row">
+    {% for item in found_products %}
+    <div class="col-md-3">
+      <div class="card mb-2" style="height:450px" >
+        <div class="card-body text-center">
+          <a href="{% url 'productview' item.category.slug item.slug %}">
+            <div class="category-image">
+              <img src="{{ item.product_image.url }}" alt="Product image" class="w-100" style="height: 200px;">
+            </div>
+            <label> <script>
+              var description = "{{item.description}}";
+              var maxLength = 70; // Maximum length of the description
+              var displayDescription = description.length > maxLength ? description.substring(0, maxLength) + "..." : description;
+              document.write(displayDescription);
+            </script></label>
+            <hr>
+            <label class="text-danger float-start">Price: Rs {{item.selling_prices |stringformat:'d'}}</label>
+          </a>
+          
+          <div class="row mt-2">
+            <div class="col-md-6">
+              {% csrf_token %}
+              <input type="hidden" value="{{item.id}}" class="prod_id">
+            </div>                
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

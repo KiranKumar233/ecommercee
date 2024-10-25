@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+    <button id="like-btn">Like</button>
+    <span id="like-count">{{ post.likes }}</span>
+    <button id="dislike-btn">Dislike</button>
+    <span id="dislike-count">{{ post.dislikes }}</span>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#like-btn').click(function(){
+                var post_id = "{{ post.id }}";
+                $.ajax({
+                    type: 'GET',
+                    url: '/like/' + post_id + '/',
+                    success: function(data){
+                        $('#like-count').html(data.likes);
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+            $('#dislike-btn').click(function(){
+                var post_id = "{{ post.id }}";
+                $.ajax({
+                    type: 'GET',
+                    url: '/dislike/' + post_id + '/',
+                    success: function(data){
+                        $('#dislike-count').html(data.dislikes);
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

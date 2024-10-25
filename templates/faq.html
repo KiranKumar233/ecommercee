@@ -1,0 +1,126 @@
+{% extends 'main.html' %}
+{%load static%}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - E-commerce Website</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin-top: 70px;}
+        .container { max-width: 800px; margin: 30px auto;}
+        .accordion-item {margin-bottom: 20px;}
+        .accordion-item .card-header { background-color: #343a40; color: #fff; border-radius: 5px; cursor: pointer;}
+        .accordion-item .card-header h5 { margin-bottom: 0;}
+        .accordion-item .card-body {padding: 15px;}
+          /* Additional CSS to change color on active state */
+        .accordion-item .card-header.active h5, .accordion-item .card-header:hover h5 {color: white !important;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center mb-4">FAQ - ATS E-SHOPPING WEBSITE  </h1>
+
+    <div class="accordion" id="faqAccordion">
+        <!-- FAQ Item 1 -->
+        <div class="accordion-item">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link text-light" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            How do I place an order?
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        To place an order, simply browse our products, add the items you wish to purchase to your shopping cart, and proceed to checkout. Follow the prompts to enter your shipping and payment information, and your order will be processed.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="accordion-item">
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed text-light" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            What payment methods do you accept?
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        We accept various payment methods, including credit/debit cards (Visa, Mastercard, American Express), PayPal, and bank transfers. You can select your preferred payment method during checkout.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="accordion-item">
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed text-light" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            How can I track my order?
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Once your order has been shipped, you will receive a tracking number. You can use this tracking number to monitor the status and delivery of your package through our website or the shipping carrier's website.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="accordion-item">
+            <div class="card">
+                <div class="card-header" id="headingFour">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed text-light" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Can I cancel or change my order?
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Once your order has been placed, it is immediately sent to our processing team to ensure quick fulfillment. Therefore, we are unable to cancel or change orders after they have been submitted. We apologize for any inconvenience this may cause.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Item 5 -->
+        <div class="accordion-item">
+            <div class="card">
+                <div class="card-header" id="headingFive">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed text-light" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            What is your return policy?
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        We offer a hassle-free return policy. If you are not completely satisfied with your purchase, you may return it within 30 days for a full refund or exchange. Please review our <a href="#">return policy</a> for more details.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add more FAQ items here -->
+    </div>
+</div>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{%endblock%}

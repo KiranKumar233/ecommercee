@@ -1,0 +1,109 @@
+{% extends 'main.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container mt-3">
+    <form action="{% url 'placeorder' %}" method="POST">
+      {% csrf_token %}
+      <div class="row product_data">
+        <div class="col-md-7 ">
+          <div class="card shadow ">
+            <div class="card-body">
+              <h6>Basic Details</h6>
+              <hr>
+              <!-- Display product details -->
+              <input type="hidden" name="product_id" value="{{ products.id }}">
+              <div class="row checkoutform">
+                <div class="col-md-12">
+                  <label for="">Product Name</label>
+                  <input type="text" readonly class="form-control" value="{{ product.name }}">
+                </div>
+                <div class="col-md-12 mt-2">
+                  <label for="">Price</label>
+                  <input type="text" readonly class="form-control" value="Rs {{ product.selling_prices }}">
+                </div>
+              </div>
+              <hr>
+              <!-- User details -->
+              <div class="row checkoutform">
+                <div class="col-md-6">
+                  <label for="">First Name</label>
+                  <input type="text" required value="{{ request.user.first_name }}" class="form-control" name="fname"
+                    placeholder="Enter First Name" size="63">
+                </div>
+                <div class="col-md-6">
+                  <label for="">Last Name</label>
+                  <input type="text" required value="{{ request.user.last_name }}" class="form-control" name="lname"
+                    placeholder="Enter Last Name" size="63">
+                </div>
+                <div class="col-md-6 mt-2">
+                  <label for="">Email</label>
+                  <input type="email" required value="{{ request.user.email }}" class="form-control" name="email"
+                    placeholder="Enter Email" size="63">
+                </div>
+                <!-- Additional fields for shipping address -->
+                <!-- Add more fields here if needed -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card-shadow">
+            <div class="card-body">
+              <h6>Order Summary</h6>
+              <hr>
+              <!-- Display product image -->
+              <img src="{{ product.product_image.url }}" class="img-fluid" alt="Product Image">
+              <!-- Display product details -->
+              <input type="hidden" name="product_id" value="{{ product.id }}">
+              <div class="row checkoutform">
+                <div class="col-md-12">
+                  <label for="">Product Name</label>
+                  <input type="text" readonly class="form-control" value="{{ product.name }}">
+                </div>
+                <div class="col-md-12 mt-2">
+                  <label for="">Price</label>
+                  <input type="text" readonly class="form-control" value="Rs {{ product.selling_prices }}">
+                </div>
+              </div>
+              <hr>
+              <!-- User details -->
+              <div class="row checkoutform">
+                <div class="col-md-6">
+                  <label for="">First Name</label>
+                  <input type="text" required value="{{ request.user.first_name }}" class="form-control" name="fname"
+                    placeholder="Enter First Name" size="63">
+                </div>
+                <div class="col-md-6">
+                  <label for="">Last Name</label>
+                  <input type="text" required value="{{ request.user.last_name }}" class="form-control" name="lname"
+                    placeholder="Enter Last Name" size="63">
+                </div>
+                <div class="col-md-6 mt-2">
+                  <label for="">Email</label>
+                  <input type="email" required value="{{ request.user.email }}" class="form-control" name="email"
+                    placeholder="Enter Email" size="63">
+                </div>
+                <!-- Additional fields for shipping address -->
+                <!-- Add more fields here if needed -->
+              </div>
+              <hr>
+              <!-- Buy Now button -->
+              <button type="submit" name="buy_now" class="btn btn-success w-100 mt-3">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
+{% endblock content %}

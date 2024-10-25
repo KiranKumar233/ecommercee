@@ -1,0 +1,9 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="container-fluid offset-md-4 col-md-4 mt-3 mb-3 shadow">
+    <h2>OTP Verification Successful</h2>
+    <p>Congratulations! Your email has been successfully verified.</p>
+     <a href="{% url 'password_reset'%}" class="btn btn-outline-primary mb-3">Reset Password</a>
+    </div>
+{% endblock %}
+

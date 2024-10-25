@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mt-3 shadow">
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="text-center">
+              <h4>Registration Form</h4>
+            </div>
+            <hr>
+            <div class="form-group">
+              <label for="">Username:</label>
+              {{form.username}}
+              {%if form.errors.username %}
+              <label class='text-danger'>{{ form.errors.username }}</label>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <label for="">Email:</label>
+              {{form.email}}
+              {%if form.errors.email %}
+              <label class='text-danger'>{{ form.errors.email }}</label>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <label for="">Password:</label>
+              {{form.password1}}
+              {%if form.errors.password1 %}
+              <label class='text-danger'>{{ form.errors.password1 }}</label>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <label for="">Confirm Password:</label>
+              {{form.password2}}
+              {%if form.errors.password2 %}
+              <label class='text-danger'>{{ form.errors.password2 }}</label>
+              {% endif %}
+            </div>
+            <div class="text-center">
+              <input type="submit" value = "Register" class="btn float-end shadow btn-dark px-4 form-control">
+              <a href="{% url 'loginpage' %}">Already registered? Login here</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

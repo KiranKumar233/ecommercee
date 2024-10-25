@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'cdnlines.html' %}
+    <title>Feedback Form</title>
+</head>
+<style>
+    
+    .feedback {max-width: 600px; margin-top: 80px; background-color: rgb(25, 17, 99); border-radius: 8px;   box-shadow: 7px 5px 5px rgb(112, 112, 111);}
+    h1 {margin-bottom: 20px;color: rgb(232, 188, 130); height: 100px;}
+    #feedbackForm{
+     margin-top: -50px;
+     margin-left: 10px;
+     margin-right:-15px;
+    }
+    label {font-weight: bold;}
+    .form-group {margin-bottom: 20px;}
+    textarea.form-control {height: 150px; resize: none;}
+    input[type="submit"] {background-color:#0056b3; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; }
+    input[type="submit"]:hover {background-color: #0056b3;}
+</style>
+
+<body>
+    <div class="container feedback">
+        <h1><u> Feedback Form </u></h1>
+        <form method="POST" class="bg-light p-3" id="feedbackForm" >
+            {% csrf_token %}
+            <label class="formlabel">Your Name</label>
+            <input type="text" name="name" class="form-control form-group" required>
+            <label class="formlabel">Your Email</label>
+            <input type="email" name="email" class="form-control form-group" required>
+            <label class="formlabel">Your Feedback/Suggestion:</label><br>
+            <textarea name="message" rows="5" class="form-control form-group" required></textarea>
+            <div class="form-group">
+                <input type="submit" value="Submit Feedback">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock content %}

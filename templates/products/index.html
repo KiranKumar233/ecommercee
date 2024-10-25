@@ -1,0 +1,57 @@
+{% extends 'main.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  {% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>{{category_name.name}}</h1>
+        <hr>
+      </div>
+    </div>
+
+    <div class="row">
+      {% for item in products %}
+      <div class="col-md-3 mb-3 mt-2">
+        <div class="card" style="height: 350px;">
+          <div class="card-body text-center">
+            <a href="{% url 'productview' item.category.slug item.slug %}">
+              <div class="category-image">
+                <img src="{{ item.product_image.url }}" alt="Product image" class="w-100" style="height: 200px;">
+              </div>
+              <label>
+                <script>
+                  var description = "{{item.small_description}}";
+                  var maxLength = 70; // Maximum length of the description
+                  var displayDescription = description.length > maxLength ? description.substring(0, maxLength) + "..." : description;
+                  document.write(displayDescription);
+                </script>
+              </label>
+              <label class="text-danger">Price: Rs {{item.selling_prices |stringformat:'d'}}</label>
+            <label class="text-dark">(- {{item.offer}})</label>
+            </a>
+
+            <div class="row mt-2">
+              <div class="col-md-6">
+                {% csrf_token %}
+                <input type="hidden" value="{{item.id}}" class="prod_id">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endblock content %}
+</body>
+
+</html>

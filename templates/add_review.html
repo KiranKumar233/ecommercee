@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'cdnlines.html' %}
+    <title>Add Review</title>
+</head>
+<body>
+    <h1>Add Review</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.content }}
+        <button type="submit" class="btn btn-success btn-lg">Comment</button>
+    </form>
+</body>
+</html>

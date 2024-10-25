@@ -1,0 +1,128 @@
+{% extends 'main.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  {% include 'cdnlines.html' %}
+  <title></title>
+  <style>
+    .nav {text-align: center;}
+  </style>
+</head>
+
+<body>
+  {% include 'slider.html' %}
+  <div class="container mt-2">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Trending Products</h2>
+        <hr>
+        <div class="row custom-carousel owl-carousel owl-theme">
+          {% for item in trending_products %}
+          <div class="product_data item">
+            <div class="card" style="height:350px">
+              <div class="card-body text-center">
+                <a href="{% url 'productview' item.category.slug item.slug %}">
+                  <div class="category-image">
+                    <img src="{{ item.product_image.url }}" alt="Product image" class="w-100" style="height: 150px;">
+                  </div>
+                  <label class="product-description" id="description-{{ forloop.counter }}"></label>
+                  <span class="text-danger float-start">Price: Rs {{item.selling_prices |stringformat:'d'}}</span>
+                </a>
+                <div class="row fixed-bottom"> <!-- Fix both buttons at bootom -->
+                  <div class="col-md-12">
+                    <hr> <!-- Add horizontal line here -->
+                  </div>
+                  <div class="col-md-5 ml-3">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{item.id}}" class="prod_id">
+                    <div class="input-group text-center mb-3" style='width:110px;'>
+                      <button class='input-group-text decrement-btn'>-</button>
+
+                      <input type="text" name="quantity" class='form-control qty-input text-center' value='1'>
+                      <button class='input-group-text increment-btn'>+</button>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    {% if item.quantity >= 0 %}
+                    <button type="button" class='btn btn-primary addToCartBtn me-3' style="height:40px;"><i
+                        class='fa fa-shopping-cart'></i>Add to cart</button>
+                    {% else %}
+                    <button type="button" class='btn btn-danger  outStock' style="height:40px;">Out Of Stock <i
+                        class='fa fa-shopping-cart'></i></button>
+                    {% endif %}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="owl-nav">
+          <button class="owl-prev navarrow bg-dark"
+            onclick="$('.custom-carousel').trigger('prev.owl.carousel')">Prev</button>
+          <button class="owl-next navarrow bg-dark"
+            onclick="$('.custom-carousel').trigger('next.owl.carousel')">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{% for item in trending_products %}
+<script>
+(function() {
+  var description = "{{ item.small_description|escapejs }}";
+  var maxLength = 70; // Maximum length of the description
+  var displayDescription = description.length > maxLength ? description.substring(0, maxLength) + "..." : description;
+  document.getElementById('description-{{ forloop.counter }}').innerText = displayDescription;
+})();
+</script>
+{% endfor %}
+
+</html>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.custom-carousel').owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: false,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 3
+        },
+        1000: {
+          items: 4
+        }
+      }
+    });
+
+    // Customize navigation buttons
+    $('.owl-prev').css({
+      'margin-right': '78%',
+    });
+    $('.navarrow').css({
+      'border-radius': '50px',
+      'width': '100px',
+      'height': '40px',
+      'margin-top': '-10px',
+      'color': 'white'
+
+    });
+    
+
+  });
+</script>
+{% endblock scripts %}

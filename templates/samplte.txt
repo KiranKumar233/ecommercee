@@ -1,0 +1,15 @@
+// Set the position of the notifier to center
+alertify.set('notifier', 'position', 'center');
+
+// Define a function to show success message with custom color
+function showCustomSuccess(msg, color) {
+    // Append a custom class based on the color provided
+    var className = 'alertify-custom-success-' + color;
+    
+    // Add the custom class to Alertify's success notification
+    alertify.success(msg).setContentClasses(className);
+}
+
+// Call the function with your message and color
+showCustomSuccess('{{ msg }}', 'green'); // For green color
+showCustomSuccess('{{ msg }}', 'blue');  // For blue color
